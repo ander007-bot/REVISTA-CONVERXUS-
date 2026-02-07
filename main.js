@@ -4,7 +4,8 @@ const sheets = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     for (let i = 1; i <= totalSheets; i++) {
-        sheets.push(document.getElementById(`sheet-${i}`));
+        const s = document.getElementById(`sheet-${i}`);
+        if(s) sheets.push(s);
     }
     updateZIndexes();
 });
@@ -39,3 +40,4 @@ document.addEventListener('keydown', (e) => {
     if (e.key === "ArrowRight") nextPage();
     if (e.key === "ArrowLeft") prevPage();
 });
+
