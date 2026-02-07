@@ -1,8 +1,4 @@
-/* * CONVERXUS MAGAZINE - PROFESSIONAL EDITORIAL THEME (MOBILE OPTIMIZED)
- */
-
 :root {
-    /* Mantenemos tu paleta original */
     --cobalt: #1F3CFF;
     --navy: #0B1320;
     --paper: #F4F4F2;
@@ -10,8 +6,6 @@
     --text-body: #1F2937;
     --line: #D1D5DB;
     --white-broken: #FAFAFA;
-
-    /* Layout dinámico */
     --page-width: 520px;
     --page-height: 720px;
     --anim-speed: 0.8s;
@@ -23,7 +17,8 @@ html, body {
     height: 100%; width: 100%;
     background-color: var(--navy);
     font-family: 'Inter', sans-serif;
-    overflow-x: hidden; /* Evita rebote horizontal en móvil */
+    overflow: hidden;
+    margin: 0; padding: 0;
 }
 
 body {
@@ -31,7 +26,6 @@ body {
     perspective: 2500px;
 }
 
-/* 3D STAGE */
 #viewport {
     width: 100vw; height: 100vh;
     display: flex; justify-content: center; align-items: center;
@@ -47,6 +41,11 @@ body {
     display: flex; justify-content: center; align-items: center;
 }
 
+/* LA SOLUCIÓN PARA MÓVIL SIN DAÑAR NADA */
+@media (max-width: 1100px) { #stage { transform: scale(0.8); } }
+@media (max-width: 900px) { #stage { transform: scale(0.6); } }
+@media (max-width: 600px) { #stage { transform: scale(0.35); } } /* Escala para celulares pequeños */
+
 .magazine { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
 
 .sheet {
@@ -59,77 +58,26 @@ body {
 
 .sheet.flipped { transform: rotateY(-180deg); }
 
-/* PAGE FACES */
 .page-face {
     position: absolute; top: 0; left: 0;
     width: 100%; height: 100%;
     background: var(--paper);
     backface-visibility: hidden;
-    overflow: hidden;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
     padding: 50px;
     display: flex; flex-direction: column;
-    color: var(--text-body);
-}
-
-/* Textura de papel */
-.page-face::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
-    opacity: 0.15; pointer-events: none; z-index: 1;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
 }
 
 .page-front { transform: rotateY(0deg); border-radius: 0 4px 4px 0; }
 .page-back { transform: rotateY(180deg); border-radius: 4px 0 0 4px; }
 
-/* Contenido Editorial (Tus estilos originales) */
-h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--ink); line-height: 1.1; z-index: 2; }
-p { font-size: 14px; line-height: 1.6; margin-bottom: 15px; z-index: 2; }
-.col-2 { column-count: 2; column-gap: 30px; }
-.box-editorial { background: var(--white-broken); border-left: 4px solid var(--cobalt); padding: 25px; margin: 20px 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; z-index: 2; }
-.img-editorial { width: 100%; margin: 15px 0; z-index: 2; border-radius: 4px; overflow: hidden; }
-.img-editorial img { width: 100%; height: auto; display: block; object-fit: contain; }
-.page-dark { background: var(--navy); color: #FAFAFA; }
-.page-dark h1, .page-dark h2 { color: white; }
+/* Estilos de contenido */
+h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--ink); }
+p { font-size: 14px; line-height: 1.6; margin-bottom: 15px; }
+.img-editorial { width: 100%; margin: 15px 0; border-radius: 4px; overflow: hidden; }
+.img-editorial img { width: 100%; height: auto; display: block; }
+.page-dark { background: var(--navy); color: white; }
+.page-dark h2 { color: white; }
 
-/* AJUSTES RESPONSIVOS (LA MAGIA) */
-@media (max-width: 1100px) {
-    #stage { transform: scale(0.8); }
-}
-
-@media (max-width: 768px) {
-    :root {
-        --page-width: 92vw; /* Casi todo el ancho del cel */
-        --page-height: 85vh; /* Casi todo el alto del cel */
-    }
-    #stage {
-        width: var(--page-width);
-        height: var(--page-height);
-        transform: none !important;
-    }
-    .sheet {
-        left: 0;
-        width: 100%;
-        transform-origin: center;
-    }
-    .sheet.flipped {
-        transform: translateX(-100vw) rotateY(-180deg);
-        opacity: 0; /* Desaparece la hoja que ya pasó para que no estorbe */
-    }
-    .page-face { padding: 30px 20px; }
-    .col-2 { column-count: 1; } /* En cel, una sola columna */
-    h2 { font-size: 24px !important; }
-    .box-editorial { font-size: 16px; padding: 15px; }
-    .page-num { left: 20px; right: 20px; }
-}
-
-/* CONTROLES */
-#controls {
-    position: absolute; bottom: 20px; left: 50%;
-    transform: translateX(-50%); display: flex; gap: 15px; z-index: 3000;
-}
-.nav-btn {
-    background: var(--cobalt); color: white; border: none;
-    padding: 12px 20px; border-radius: 4px; cursor: pointer;
-    font-family: 'Outfit', sans-serif; font-size: 12px; text-transform: uppercase;
-}
+#controls { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 1000; }
+.nav-btn { background: var(--cobalt); color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 2px; }
