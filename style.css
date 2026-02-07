@@ -525,26 +525,34 @@ p {
     #stage { transform: scale(0.32); transform-origin: center center; }
 }
 /* -------------------------------------------------------------- */
-/* --- AJUSTE DE BOTONES PARA MÓVIL --- */
+/* --- REPARACIÓN DEFINITIVA DE BOTONES EN MÓVIL --- */
 @media (max-width: 768px) {
     #controls {
-        position: fixed; /* Los fija a la pantalla del cel */
-        bottom: 20px;
-        left: 0;
-        right: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 40px; /* Más espacio para los dedos */
-        z-index: 9999; /* Asegura que estén por encima de todo */
-        transform: scale(1.5); /* Los hace más grandes para que sea fácil tocarlos */
+        position: fixed !important;
+        bottom: 40px !important; /* Lo subimos un poco para que no lo tape la barra del navegador */
+        left: 0 !important;
+        width: 100vw !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 30px !important;
+        z-index: 999999 !important; /* Prioridad máxima sobre cualquier hoja */
+        transform: none !important; /* Evitamos que herede escalas raras */
     }
 
     .nav-btn {
-        background: var(--cobalt) !important; /* Usa tu azul original */
+        display: block !important;
+        visibility: visible !important;
+        background: #1F3CFF !important; /* Tu azul cobalto */
         color: white !important;
-        padding: 15px 25px !important;
-        border-radius: 8px !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        padding: 15px 30px !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        border-radius: 50px !important; /* Estilo píldora para que sea más moderno */
+        border: 2px solid white !important;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.5) !important;
+        cursor: pointer !important;
+        pointer-events: auto !important; /* Asegura que el botón responda al toque */
     }
 }
+
