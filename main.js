@@ -12,11 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function updateZIndexes() {
     sheets.forEach((sheet, index) => {
-        if (index < currentPage) {
-            sheet.style.zIndex = index + 1;
-        } else {
-            sheet.style.zIndex = totalSheets - index;
-        }
+        sheet.style.zIndex = (index < currentPage) ? (index + 1) : (totalSheets - index);
     });
 }
 
@@ -36,8 +32,4 @@ function prevPage() {
     }
 }
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === "ArrowRight") nextPage();
-    if (e.key === "ArrowLeft") prevPage();
-});
 
