@@ -508,4 +508,20 @@ p {
         transform: scale(0.7);
     }
 }
+/* --- ESCALADO PROPORCIONAL PARA MÓVILES (NO TOCAR ESTRUCTURA) --- */
+@media (max-width: 1024px) {
+    #stage { transform: scale(0.8); transform-origin: center center; }
+}
 
+@media (max-width: 768px) {
+    #stage { transform: scale(0.6); transform-origin: center center; }
+}
+
+@media (max-width: 480px) {
+    #stage { transform: scale(0.35); transform-origin: center center; }
+}
+
+@media (max-width: 380px) {
+    #stage { transform: scale(0.32); transform-origin: center center; }
+}
+/* -------------------------------------------------------------- */
