@@ -1,61 +1,93 @@
+/* * CONVERXUS ENGINE - MÓVIL Y ESCRITORIO 
+ * Optimizado para visualización responsiva 2026
+ */
 
-/* CONVERXUS MAGAZINE ENGINE */
-
-let currentPage = 0; // 0 = Closed Cover
+let currentPage = 0; 
 const totalSheets = 17;
 const sheets = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Sheets
+    // Inicializamos las hojas buscando los IDs en el HTML
     for (let i = 1; i <= totalSheets; i++) {
-        sheets.push(document.getElementById(`sheet-${i}`));
+        const s = document.getElementById(`sheet-${i}`);
+        if(s) {
+            sheets.push(s);
+        }
     }
 
-    // Set initial Z-Indexes
+    // Aplicamos el orden de apilamiento inicial (Z-Index)
     updateZIndexes();
 });
 
+/**
+ * Gestiona el orden de las hojas para que las de arriba 
+ * siempre sean las visibles según la página actual.
+ */
 function updateZIndexes() {
-    // Sheets that are NOT flipped (right side) need standard stacking (16 down to 1)
-    // Sheets that ARE flipped (left side) need reverse stacking (1 up to 16)
-
     sheets.forEach((sheet, index) => {
-        let z;
         if (index < currentPage) {
-            // This sheet is flipped (on the left)
-            // It should form a stack: sheet 1 at bottom, sheet X at top.
-            // So higher index = higher z-index
-            z = index + 1;
+            // Hojas que ya pasaron (se apilan a la izquierda)
+            sheet.style.zIndex = index + 1;
         } else {
-            // This sheet is NOT flipped (on the right)
-            // It should form a stack: sheet X at top, sheet 16 at bottom.
-            // So lower index = higher z-index
-            z = totalSheets - index;
+            // Hojas que faltan por pasar (se apilan a la derecha)
+            sheet.style.zIndex = totalSheets - index;
         }
-        sheet.style.zIndex = z;
     });
 }
 
+/**
+ * Pasa a la siguiente hoja
+ */
 function nextPage() {
     if (currentPage < totalSheets) {
-        const sheet = sheets[currentPage];
-        sheet.classList.add('flipped');
+        sheets[currentPage].classList.add('flipped');
         currentPage++;
         updateZIndexes();
     }
 }
 
+/**
+ * Regresa a la hoja anterior
+ */
 function prevPage() {
     if (currentPage > 0) {
         currentPage--;
-        const sheet = sheets[currentPage];
-        sheet.classList.remove('flipped');
+        sheets[currentPage].classList.remove('flipped');
         updateZIndexes();
     }
 }
 
-// Keyboard nav
+/**
+ * Soporte para navegación con teclado
+ */
 document.addEventListener('keydown', (e) => {
     if (e.key === "ArrowRight") nextPage();
     if (e.key === "ArrowLeft") prevPage();
 });
+
+/**
+ * Prevención de gestos predeterminados del navegador 
+ * para mejorar la experiencia táctil en móviles.
+ */
+document.addEventListener('gesturestart', (e) => {
+    e.preventDefault();
+});
+
+// Opcional: Soporte para deslizar (swipe) básico en móviles
+let touchstartX = 0;
+let touchendX = 0;
+
+document.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX;
+    handleGesture();
+});
+
+function handleGesture() {
+    if (touchendX < touchstartX - 50) nextPage();
+    if (touchendX > touchstartX + 50) prevPage();
+}
+
