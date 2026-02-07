@@ -525,3 +525,26 @@ p {
     #stage { transform: scale(0.32); transform-origin: center center; }
 }
 /* -------------------------------------------------------------- */
+/* --- AJUSTE DE BOTONES PARA MÓVIL --- */
+@media (max-width: 768px) {
+    #controls {
+        position: fixed; /* Los fija a la pantalla del cel */
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 40px; /* Más espacio para los dedos */
+        z-index: 9999; /* Asegura que estén por encima de todo */
+        transform: scale(1.5); /* Los hace más grandes para que sea fácil tocarlos */
+    }
+
+    .nav-btn {
+        background: var(--cobalt) !important; /* Usa tu azul original */
+        color: white !important;
+        padding: 15px 25px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+}
