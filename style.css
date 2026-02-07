@@ -1,0 +1,510 @@
+/* 
+ * CONVERXUS MAGAZINE - PROFESSIONAL EDITORIAL THEME
+ * Standards: MIT Technology Review / Harvard Business Review
+ */
+
+:root {
+    /* Editorial Palette */
+    --cobalt: #1F3CFF;
+    /* Deep Cobalt */
+    --navy: #0B1320;
+    /* Deep Navy */
+    --paper: #F4F4F2;
+    /* Warm Editorial Gray (Paper) */
+    --ink: #0B1320;
+    /* Dark Navy for Text */
+    --text-body: #1F2937;
+    /* Body text */
+    --line: #D1D5DB;
+    /* Elegant Dividers */
+    --white-broken: #FAFAFA;
+    /* Functional white space */
+
+    /* Layout */
+    --page-width: 520px;
+    --page-height: 720px;
+    --anim-speed: 0.8s;
+}
+
+/* GLOBAL RESET */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background-color: var(--navy);
+    /* Deep outer background */
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    /* Prevent scrolls during flip */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2500px;
+}
+
+.img-editorial {
+    width: 100%;
+    height: auto;
+    max-height: 280px;
+    margin: 15px 0;
+    z-index: 2;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.02);
+    /* Fondo sutil para imágenes con transparencia */
+}
+
+.img-editorial img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    /* Garantiza que la imagen se vea completa */
+}
+
+/* 3D STAGE */
+#viewport {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* Vertical Center */
+    align-items: center;
+    /* Horizontal Center */
+    position: relative;
+    overflow: hidden;
+    background-color: var(--navy);
+}
+
+#stage {
+    width: calc(var(--page-width) * 2);
+    height: var(--page-height);
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center center;
+}
+
+/* Add a slight scale down if the screen is too small */
+@media (max-width: 1100px) {
+    #stage {
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 900px) {
+    #stage {
+        transform: scale(0.6);
+    }
+}
+
+@media (max-height: 800px) {
+    #stage {
+        transform: scale(0.8);
+    }
+}
+
+.magazine {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+/* SHEET SYSTEM */
+.sheet {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--page-width);
+    height: var(--page-height);
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform var(--anim-speed) cubic-bezier(0.645, 0.045, 0.355, 1);
+    z-index: 1;
+}
+
+.sheet.flipped {
+    transform: rotateY(-180deg);
+}
+
+/* Z-INDEX HANDLED BY JS, BUT DEFAULTS: */
+.sheet:nth-child(1) {
+    z-index: 17;
+}
+
+.sheet:nth-child(2) {
+    z-index: 16;
+}
+
+.sheet:nth-child(3) {
+    z-index: 15;
+}
+
+.sheet:nth-child(4) {
+    z-index: 14;
+}
+
+.sheet:nth-child(5) {
+    z-index: 13;
+}
+
+.sheet:nth-child(6) {
+    z-index: 12;
+}
+
+.sheet:nth-child(7) {
+    z-index: 11;
+}
+
+.sheet:nth-child(8) {
+    z-index: 10;
+}
+
+.sheet:nth-child(9) {
+    z-index: 9;
+}
+
+.sheet:nth-child(10) {
+    z-index: 8;
+}
+
+.sheet:nth-child(11) {
+    z-index: 7;
+}
+
+.sheet:nth-child(12) {
+    z-index: 6;
+}
+
+.sheet:nth-child(13) {
+    z-index: 5;
+}
+
+.sheet:nth-child(14) {
+    z-index: 4;
+}
+
+.sheet:nth-child(15) {
+    z-index: 3;
+}
+
+.sheet:nth-child(16) {
+    z-index: 2;
+}
+
+.sheet:nth-child(17) {
+    z-index: 1;
+}
+
+/* PAGE FACES */
+.page-face {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--paper);
+    backface-visibility: hidden;
+    overflow: hidden;
+    /* Editorial layout control */
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+    /* Very fine edge */
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-body);
+}
+
+/* Paper Texture */
+.page-face::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.page-front {
+    transform: rotateY(0deg);
+    border-radius: 0 4px 4px 0;
+    z-index: 2;
+}
+
+.page-back {
+    transform: rotateY(180deg);
+    border-radius: 4px 0 0 4px;
+    z-index: 1;
+}
+
+/* CENTRAL SHADOW (Gutter) */
+.page-front::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
+    z-index: 2;
+}
+
+.page-back::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.1), transparent);
+    z-index: 2;
+}
+
+/* CONTENT STYLING */
+h1,
+h2,
+h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+    z-index: 2;
+}
+
+p {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    z-index: 2;
+}
+
+.col-2 {
+    column-count: 2;
+    column-gap: 30px;
+}
+
+.editorial-lead {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--cobalt);
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+/* BOXES */
+.box-editorial {
+    background: var(--white-broken);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--cobalt);
+    padding: 25px;
+    margin: 20px 0;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    z-index: 2;
+}
+
+.box-critical {
+    background: rgba(31, 60, 255, 0.05);
+    border: 1px solid var(--cobalt);
+    padding: 20px;
+    margin: 15px 0;
+    z-index: 2;
+}
+
+.box-critical h4 {
+    color: var(--cobalt);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+/* IMAGES */
+.img-editorial {
+    width: 100%;
+    margin: 20px 0;
+    z-index: 2;
+    border-radius: 2px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.img-editorial img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* DARK PAGES */
+.page-dark {
+    background: var(--navy);
+    color: #FAFAFA;
+}
+
+.page-dark h1,
+.page-dark h2,
+.page-dark h3 {
+    color: white;
+}
+
+.page-dark::before {
+    opacity: 0.05;
+}
+
+/* PAGE NUMBERS */
+.page-num {
+    position: absolute;
+    bottom: 30px;
+    left: 50px;
+    right: 50px;
+    font-size: 11px;
+    color: #9CA3AF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 10px;
+    z-index: 2;
+}
+
+.page-dark .page-num {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* CONTROLS */
+#controls {
+    margin-top: 30px;
+    z-index: 1000;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px 25px;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+    margin: 0 10px;
+    transition: all 0.3s;
+    border-radius: 2px;
+}
+
+.nav-btn:hover {
+    background: var(--cobalt);
+    border-color: var(--cobalt);
+}
+
+/* COVER SPECIFICS */
+.cover-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 60px;
+}
+
+.cover-brand {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 60px;
+    letter-spacing: -2px;
+    margin-bottom: 5px;
+}
+
+.cover-slogan {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 28px;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.cover-separator {
+    width: 60px;
+    height: 3px;
+    background: var(--cobalt);
+    margin: 30px 0;
+}
+
+.cover-details {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-top: 50px;
+}
+
+/* Back cover */
+.back-cover-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 50px;
+}
+
+/* FOUNDER PROFILES */
+.founder-box {
+    margin-top: 30px;
+}
+
+.founder-box h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.founder-meta {
+    font-size: 12px;
+    color: var(--cobalt);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+    #stage {
+        transform: scale(0.85);
+    }
+}
+
+@media (max-width: 900px) {
+    #stage {
+        transform: scale(0.7);
+    }
+}
